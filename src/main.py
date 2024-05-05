@@ -22,7 +22,8 @@ def main():
 
     masked_numbers = mask_numbers(group_by_4)
 
-    result = make_result(masked_numbers)
+    make_result(masked_numbers)
+
 
 
 if __name__ == "__main__":

@@ -26,7 +26,6 @@ def executed_transactions(data: list):
     return executed_data
 
 
-
 def sorts_date(data: list):
     '''сортирует по дате и оставляет только успешные транзакции и возвращает последние 5 операций'''
 
@@ -41,7 +40,6 @@ def formatted_date(data: list):
         numbers = date_str[0].split('-')
         y_, m_, d_ = numbers
         el["date"] = '.'.join([d_, m_, y_])
-
     return data
 
 
@@ -60,7 +58,6 @@ def group_card_numbers(transactions: list):
 def mask_numbers(data: list):
     '''маскирует номера'''
     for i in data:
-
         if i['to'][0] == 'Счет':
             i['to'][1] = '**' + i['to'][1][-4:]
         else:
@@ -73,48 +70,47 @@ def mask_numbers(data: list):
                 i['from'][1] = i['from'][1][:7] + '** **** ' + i['from'][1][-4:]
     return data
 
-
 def make_result(data: list):
     '''выводит обработанную инфу'''
     for i in data:
+        description = i['description']
+        operation_amount = float(i['operationAmount']['amount'])
+        currency = i['operationAmount']['currency']['name']
         if 'from' in i:
-            print(f'''
-    {i['date']} {i['description']}
-    {i['from'][0]} {i['from'][1]} -> {i['to'][0]} {i['to'][1]}''')
+            print(
+                f'\n    {i["date"]} {description}\n    {i["from"][0]} {i["from"][1]} -> {i["to"][0]} {i["to"][1]}\n    {operation_amount} {currency}')
         else:
-            print(f'''
-    {i['date']} {i['description']}
-    {i['to'][0]}  {i['to'][1]} ''')
+            print(f'\n    {i["date"]} {description}\n    {i["to"][0]}  {i["to"][1]}\n    {operation_amount} {currency}')
 
-#
+
+
 # if __name__ == "__main__":
 #     data = load_data(os_path)
-#
+
 #     execute = executed_transactions(data)
-#
+
 #     sorted_ = sorts_date(execute)
-#
+
 #     formated = formatted_date(sorted_)
-#
+
 #     transactions = group_card_numbers(formated)
-#     # for transaction in transactions:
-#     #     print(transaction)
-#
+#      for transaction in transactions:
+#          print(transaction)
+
 #     mask_num = mask_numbers(transactions)
 #     for i in mask_num:
-#         print(i)
-#
+#         print(i)#
 #     result = make_result(mask_num)
 
-    # for i in fin:
-    #     if 'from' in i:
-    #         print(f'''
-    # {i['date']} {i['description']}
-    # {i['from'][0]} {i['from'][1]} -> {i['to'][0]} {i['to'][1]}''')
-    #     else:
-    #         print(f'''
-    # {i['date']} {i['description']}
-    # {i['to'][0]}  {i['to'][1]} ''')
+ #    for i in fin:
+ #        if 'from' in i:
+ #            print(f'''
+#     {i['date']} {i['description']}
+#     {i['from'][0]} {i['from'][1]} -> {i['to'][0]} {i['to'][1]}''')
+#         else:
+#             print(f'''
+#     {i['date']} {i['description']}
+#    {i['to'][0]}  {i['to'][1]} ''')
 
 # пример вывода одной операции
 # 14.10.2018 Перевод организации
